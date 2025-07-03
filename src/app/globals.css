@@ -1,7 +1,59 @@
 @import "tailwindcss";
 @plugin "daisyui" {
   themes: emerald;
-};
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/inter.ttf");
+}
+
+@font-face {
+  font-family: "Gotham";
+  src: url("/fonts/gotham.otf");
+}
+
+:root {
+  --color-red: #a51c31;
+  --color-white: #f3f3f3;
+  --font-inter: "Inter", sans-serif;
+  --font-gotham: "Gotham", sans-serif;
+  --font-small: 0.8em;
+  --font-default: 1em;
+  --font-large: 1.5em;
+  --radius-default: 0.8em;
+  --line-height: 1.5em;
+  --gap-button: 0.8em 2.5em;
+  --cursor: pointer
+}
+
+@layer base {
+  body {
+    font-family: var(--font-inter);
+    font-size: var(--font-default);
+    line-height: var(--line-height);
+    margin: 2.5%;
+    @apply text-justify
+  }
+}
+
+@layer components {
+  .btn-primary, .btn-secondary {    
+    border: 1px solid var(--color-red);
+    padding: var(--gap-button);
+    @apply rounded-full cursor-pointer
+  }
+
+  .btn-primary, .btn-secondary {
+    background-color: var(--color-red);
+    color: var(--color-white);    
+  }
+
+  .btn-secondary {
+    background-color: var(--color-white);
+    color: var(--color-red);    
+  }
+}
 
 /* :root {
   --background: #ffffff;
