@@ -1,3 +1,7 @@
 export default function RootPage() {
-  return <div>Home</div>;
+  return (
+    <div>
+      <button className="btn btn-primary">Primary</button>
+    </div>
+  );
 }
