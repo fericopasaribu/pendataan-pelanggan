@@ -21,6 +21,7 @@
   --color-inactive: #eeeeee;
   --color-border: #a0a0a0;
   --color-sort: #888888;
+  --color-error: #ff3f33;
   --font-inter: "Inter", sans-serif;
   --font-gotham: "Gotham", sans-serif;
   --font-small: 0.8em;
@@ -113,13 +114,21 @@
     font-size: var(--font-small);
   }
 
+  .area-view-button {
+    @apply flex justify-center mb-2.5 sm:mb-10 flex-col sm:flex-row;
+  }
+
+  .area-search {
+    @apply flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-4;
+  }
+
   .pagination-area {
-    @apply flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between;
+    @apply flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between;
   }
 
   .pagination-info {
     font-size: var(--font-default);
-    @apply flex flex-col sm:flex-row items-center gap-1 text-[var(--color-black)];
+    @apply flex flex-col sm:flex-row items-center gap-2 text-[var(--color-black)];
   }
 
   .pagination-control {
@@ -132,6 +141,10 @@
 
   .table-content {
     @apply w-full caption-bottom;
+  }
+
+  .table-error {
+    @apply flex items-center justify-center text-[var(--color-error)] text-base;
   }
 
   .table-th-title {
@@ -152,6 +165,7 @@
 
   .table-td {
     background-color: var(--color-white);
+    font-family: var(--font-inter);
     font-size: var(--font-default);
   }
 
@@ -159,8 +173,8 @@
   .btn-secondary {
     border: 1px solid var(--color-red);
     padding: var(--gap-button);
-    width: 184px;
-    @apply rounded-full cursor-pointer transition duration-300 active:scale-95 outline-0;
+    /* width: 210px; */
+    @apply rounded-full cursor-pointer transition duration-300 active:scale-95 outline-0 flex items-center justify-center gap-2 mb-5 w-full sm:w-52 sm:m-2;
   }
 
   .btn-primary {
@@ -183,6 +197,26 @@
 }
 
 @layer utilities {
+  .pagination-nav {
+    @apply border-[var(--color-border)] rounded-full text-xl cursor-pointer hover:bg-[var(--color-inactive)];
+  }
+
+  .pagination-ellipsis {
+    @apply px-2 text-muted-foreground;
+  }
+
+  .pagination-page {
+    @apply border-[var(--color-border)] rounded-full text-base;
+  }
+
+  .pagination-page:not([data-state="checked"]) {
+    @apply cursor-pointer bg-[var(--color-white)] text-[var(--color-black)] hover:bg-[var(--color-inactive)];
+  }
+
+  .pagination-page:disabled {
+    @apply bg-[var(--color-red)] text-[var(--color-white)] opacity-100;
+  }
+
   .input-text {
     font-size: var(--font-default);
     @apply h-12 w-full border-[var(--color-border)] transition duration-300 focus:border-transparent focus:ring-2 focus:ring-[var(--color-black)] mb-2.5 sm:mb-0;
@@ -195,7 +229,11 @@
 
   .input-select > svg {
     color: var(--color-black) !important;
-    opacity: 1 !important
+    opacity: 1 !important;
+  }
+
+  .input-select-content {
+    @apply mt-1 border-[var(--color-border)];
   }
 
   .input-select-item {
@@ -217,22 +255,6 @@
 
   .table-th-title {
     @apply hover:bg-transparent hover:text-[var(--color-white)];
-  }
-
-  .pagination-nav {
-    @apply border-[var(--color-border)] rounded-full text-xl cursor-pointer hover:bg-[var(--color-inactive)];
-  }
-
-  .pagination-page {
-    @apply border-[var(--color-border)] rounded-full text-base;
-  }
-
-  .pagination-page:not([data-state="checked"]) {
-    @apply cursor-pointer bg-[var(--color-white)] text-[var(--color-black)] hover:bg-[var(--color-inactive)];
-  }
-
-  .pagination-page:disabled {
-    @apply bg-[var(--color-red)] text-[var(--color-white)] opacity-100;
   }
 
   @media (min-width: 640px) {
