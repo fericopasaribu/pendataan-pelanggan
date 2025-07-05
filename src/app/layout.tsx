@@ -1,7 +1,7 @@
+import CustomFooter from "@/layouts/CustomFooter";
+import CustomHeader from "@/layouts/CustomHeader";
 import type { Metadata } from "next";
 import "./globals.css";
-import LayoutHeader from "@/layout/Header";
-import LayoutFooter from "@/layout/Footer";
 
 export const metadata: Metadata = {
   title: "Tampil Data Pelanggan",
@@ -14,12 +14,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="cupcake">
+    <html lang="en">
       <body>
-        <div className="min-h-screen flex flex-col">
-          <LayoutHeader />
+        <div className="area-page">
+          <CustomHeader />
           <div className="area-content">{children}</div>
-          <LayoutFooter />
+          <CustomFooter />
         </div>
       </body>
     </html>

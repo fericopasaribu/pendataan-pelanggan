@@ -1,8 +1,7 @@
-import { STRINGS } from "@/constant/Text";
+import { CUSTOM_TEXT } from "@/constants/CustomText";
 import Image from "next/image";
-import React from "react";
 
-export default function LayoutHeader() {
+export default function CustomHeader() {
   return (
     <div className="area-header">
       <Image
@@ -11,9 +10,10 @@ export default function LayoutHeader() {
         height={64}
         alt="Logo"
         sizes="(max-width: 640px) 48px, 64px"
-        className="w-12 h-12 ml-0 mr-3 my-3 sm:w-16 sm:h-16 sm:ml-10"
+        className="image-header"
+        priority
       />
-      <div className="text-header">{STRINGS.company}</div>
+      <div className="text-header">{CUSTOM_TEXT.company}</div>
     </div>
   );
 }
