@@ -1,5 +1,5 @@
 "use client";
-import { columns } from "@/models/user";
+import { columns } from "@/features/user";
 import CustomButton from "@/components/CustomButton";
 import { DataTable } from "@/components/ui/data-table";
 

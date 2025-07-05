@@ -6,24 +6,49 @@ function getPaginationRange(
 ): (number | "ellipsis")[] {
   const pages: (number | "ellipsis")[] = [];
 
-  if (total <= 5) {
+  if (total <= 3) {
     return Array.from({ length: total }, (_, i) => i + 1);
   }
 
-  const firstPages = [1, 2];
-  const lastPages = [total - 1, total];
-  const isInFirstBlock = current <= 3;
-  const isInLastBlock = current >= total - 2;
+  // const firstPages = [1];
+  // const lastPages = [total];
+  // const isInFirstBlock = current <= 2;
+  // const isInLastBlock = current >= total - 1;
+
+  // if (isInFirstBlock) {
+  //   pages.push(...firstPages);
+  //   if (current === 2) pages.push(current);
+  //   pages.push("ellipsis");
+  //   pages.push(...lastPages);
+  // } else if (isInLastBlock) {
+  //   pages.push(...firstPages);
+  //   pages.push("ellipsis");
+  //   if (current === total - 1) pages.push(current);
+  //   pages.push(...lastPages);
+  // } else {
+  //   pages.push(...firstPages);
+  //   pages.push("ellipsis");
+  //   pages.push(current);
+  //   pages.push("ellipsis");
+  //   pages.push(...lastPages);
+  // }
+
+  const firstPages = [1];
+  const lastPages = [total];
+  const middlePages = Math.floor(total / 2);
+
+  const isInFirstBlock = current <= middlePages;
+  const isInLastBlock = current > middlePages;
 
   if (isInFirstBlock) {
     pages.push(...firstPages);
-    if (current === 3) pages.push(current);
+    if (current > 1 && current < total) pages.push(current);
     pages.push("ellipsis");
     pages.push(...lastPages);
   } else if (isInLastBlock) {
     pages.push(...firstPages);
     pages.push("ellipsis");
-    if (current === total - 2) pages.push(current);
+    if (current > 1 && current < total) pages.push(current);
     pages.push(...lastPages);
   } else {
     pages.push(...firstPages);
@@ -123,7 +148,7 @@ export function DataTable<TData, TValue>({
             <SelectValue />
           </SelectTrigger>
           <SelectContent className="mt-1 border-[var(--color-border)]">
-            {[1, 50, data.length].map((size) => (
+            {[10, 50, data.length].map((size) => (
               <SelectItem
                 key={size}
                 value={String(size)}

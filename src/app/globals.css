@@ -79,32 +79,6 @@
 }
 
 @layer components {
-  .btn-primary,
-  .btn-secondary {
-    border: 1px solid var(--color-red);
-    padding: var(--gap-button);
-    width: 184px;
-    @apply rounded-full cursor-pointer transition duration-300 active:scale-95 outline-0;
-  }
-
-  .btn-primary {
-    background-color: var(--color-red);
-    color: var(--color-white);
-  }
-
-  .btn-primary:hover {
-    background-color: var(--color-red-hover);
-  }
-
-  .btn-secondary {
-    background-color: var(--color-white);
-    color: var(--color-red);
-  }
-
-  .btn-secondary:hover {
-    background-color: var(--color-white-hover);
-  }
-
   .area-page {
     @apply min-h-screen flex flex-col;
   }
@@ -125,7 +99,7 @@
   }
 
   .area-content {
-    @apply m-5 flex-1;
+    @apply mx-4 my-8 flex-1;
   }
 
   .area-footer {
@@ -180,12 +154,38 @@
     background-color: var(--color-white);
     font-size: var(--font-default);
   }
+
+  .btn-primary,
+  .btn-secondary {
+    border: 1px solid var(--color-red);
+    padding: var(--gap-button);
+    width: 184px;
+    @apply rounded-full cursor-pointer transition duration-300 active:scale-95 outline-0;
+  }
+
+  .btn-primary {
+    background-color: var(--color-red);
+    color: var(--color-white);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-red-hover);
+  }
+
+  .btn-secondary {
+    background-color: var(--color-white);
+    color: var(--color-red);
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--color-white-hover);
+  }
 }
 
 @layer utilities {
   .input-text {
     font-size: var(--font-default);
-    @apply h-12 w-full border-[var(--color-border)] transition duration-300 focus:border-transparent focus:ring-2 focus:ring-[var(--color-black)];
+    @apply h-12 w-full border-[var(--color-border)] transition duration-300 focus:border-transparent focus:ring-2 focus:ring-[var(--color-black)] mb-2.5 sm:mb-0;
   }
 
   .input-select {
@@ -195,6 +195,7 @@
 
   .input-select > svg {
     color: var(--color-black) !important;
+    opacity: 1 !important
   }
 
   .input-select-item {
@@ -231,7 +232,7 @@
   }
 
   .pagination-page:disabled {
-    @apply bg-[var(--color-red)] text-[var(--color-white)] opacity-100    
+    @apply bg-[var(--color-red)] text-[var(--color-white)] opacity-100;
   }
 
   @media (min-width: 640px) {
@@ -244,7 +245,7 @@
     }
 
     .area-content {
-      @apply mx-10;
+      @apply m-10;
     }
   }
 }
