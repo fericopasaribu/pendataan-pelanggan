@@ -246,52 +246,6 @@ export const columns: ColumnDef<Pelanggan>[] = [
       const fullImage = `/uploads/${url}`;
 
       return (
-        // <DialogPrimitive.Root>
-        //   <DialogPrimitive.Trigger asChild>
-        //     <div className="flex justify-center cursor-pointer">
-        //       <Image
-        //         priority
-        //         src={fullImage}
-        //         alt={url}
-        //         width={50}
-        //         height={50}
-        //         className="rounded-sm object-cover w-full h-auto hover:opacity-80 transition"
-        //       />
-        //     </div>
-        //   </DialogPrimitive.Trigger>
-
-        //   <DialogPrimitive.Portal>
-        //     <DialogPrimitive.Overlay className="fixed inset-0 bg-black/50 z-50" />
-        //     <DialogPrimitive.Content
-        //       // Remove aria-labelledby from here, it will be handled by DialogPrimitive.Title
-        //       className="fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2">
-        //       <VisuallyHidden.Root>
-        //         {/* Wrap the title with VisuallyHidden.Root */}
-        //         <DialogPrimitive.Title className="flex items-center gap-2 mb-4 text-lg font-semibold">
-        //           <ImageX />
-        //           Foto
-        //         </DialogPrimitive.Title>
-        //       </VisuallyHidden.Root>
-
-        //       <div className="relative">
-        //         <Image
-        //           src={fullImage}
-        //           alt={`Preview ${url}`}
-        //           width={500}
-        //           height={500}
-        //           className="rounded-lg object-contain"
-        //         />
-
-        //         <DialogPrimitive.Close asChild>
-        //           <button className="absolute right-[-1rem] top-[-1rem] rounded-full p-2 border border-[var(--color-border)] text-[var(--color-black)] bg-[var(--color-white)] focus:!ring-0 focus:!ring-[var(--color-sort)] outline-0 cursor-pointer">
-        //             <X className="w-5 h-5" />
-        //           </button>
-        //         </DialogPrimitive.Close>
-        //       </div>
-        //     </DialogPrimitive.Content>
-        //   </DialogPrimitive.Portal>
-        // </DialogPrimitive.Root>
-
         <CustomImageDialog
           thumbnailSrc={fullImage} // kecil (e.g. 50x50)
           fullImageSrc={fullImage} // ukuran penuh
