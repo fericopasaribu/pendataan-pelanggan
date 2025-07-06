@@ -1,0 +1,69 @@
+"use client";
+
+import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { X, Image as ImageX } from "lucide-react";
+import Image from "next/image";
+
+interface CustomImageDialogProps {
+  thumbnailSrc: string;
+  fullImageSrc: string;
+  alt?: string;
+  thumbnailClassName?: string;
+}
+
+export function CustomImageDialog({
+  thumbnailSrc,
+  fullImageSrc,
+  alt = "Preview",
+  thumbnailClassName = "rounded-sm object-cover w-full h-full lg:w-15 lg:h-15 hover:opacity-80 transition",
+}: CustomImageDialogProps) {
+  return (
+    <DialogPrimitive.Root>
+      <DialogPrimitive.Trigger asChild>
+        <div className="flex justify-center cursor-pointer">
+          <Image
+            priority
+            src={thumbnailSrc}
+            alt={alt}
+            width={50}
+            height={50}
+            className={thumbnailClassName}
+          />
+        </div>
+      </DialogPrimitive.Trigger>
+
+      <DialogPrimitive.Portal>
+        <DialogPrimitive.Overlay className="fixed inset-0 bg-black/50 z-50" />
+        <DialogPrimitive.Content
+          
+          className="fixed left-1/2 top-1/2 z-50 w-full max-w-[90vw] max-h-[90vh] sm:max-w-md -translate-x-1/2 -translate-y-1/2">            
+          <VisuallyHidden>
+            <DialogPrimitive.Title className="flex items-center gap-2 mb-4 text-lg font-semibold">
+              <ImageX />
+              {alt}
+            </DialogPrimitive.Title>
+
+            <DialogPrimitive.Description className="sr-only" />
+          </VisuallyHidden>
+
+          <div className="relative">
+            <Image
+              src={fullImageSrc}
+              alt={alt}
+              width={500}
+              height={500}
+              className="rounded-lg object-contain"
+            />
+
+            <DialogPrimitive.Close asChild>
+              <button className="absolute right-[-1rem] top-[-1rem] rounded-full p-2 border border-[var(--color-border)] text-[var(--color-black)] bg-[var(--color-white)] focus:!ring-0 focus:!ring-[var(--color-sort)] outline-0 cursor-pointer">
+                <X className="w-5 h-5" />
+              </button>
+            </DialogPrimitive.Close>
+          </div>
+        </DialogPrimitive.Content>
+      </DialogPrimitive.Portal>
+    </DialogPrimitive.Root>
+  );
+}

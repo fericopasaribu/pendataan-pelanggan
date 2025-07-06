@@ -1,6 +1,6 @@
 "use client";
 import CustomButton from "@/components/CustomButton";
-import CustomReload from "@/components/CustomReload";
+import CustomReloadButton from "@/components/CustomReloadButton";
 import { DataTable } from "@/components/ui/data-table";
 import { columns } from "@/features/user";
 import { getData } from "@/models/user";
@@ -30,9 +30,14 @@ export default function PelangganViewPage() {
   return (
     <div>
       <div className="area-view-button">
-        <CustomButton label="Tambah Data" className="btn-primary" icon={Plus} />
+        <CustomButton
+          path="/add"
+          label="Tambah Data"
+          className="btn-primary"
+          icon={Plus}
+        />
 
-        <CustomReload
+        <CustomReloadButton
           label="Refresh Data"
           className="btn-secondary"
           icon={RefreshCcw}

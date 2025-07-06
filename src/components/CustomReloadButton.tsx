@@ -9,7 +9,7 @@ interface CustomReloadProps {
   onClick: () => void;
 }
 
-export default function CustomReload({
+export default function CustomReloadButton({
   label = "",
   className = "",
   icon: Icon,

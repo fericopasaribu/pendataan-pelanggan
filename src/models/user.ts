@@ -1,14 +1,24 @@
 "use server"
 import { PrismaClient } from "@prisma/client";
 
-// buat variabel "prisma"
+// variabel "prisma"
 const prisma = new PrismaClient();
 
-// buat fungsi untuk tampil data
-export async function getData() {
+// fungsi untuk tampil data
+export const getData = async () => {
 
     const getData = await prisma.tb_pelanggan.findMany({
     });
 
     return getData;
+}
+
+// fungsi untuk hapus data
+export const deleteData = async (id: number) => {
+
+    await prisma.tb_pelanggan.delete({
+        where: {
+            id: id,
+        },
+    });
 }

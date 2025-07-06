@@ -2,6 +2,7 @@ import CustomFooter from "@/layouts/CustomFooter";
 import CustomHeader from "@/layouts/CustomHeader";
 import type { Metadata } from "next";
 import "./globals.css";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Tampil Data Pelanggan",
@@ -19,6 +20,7 @@ export default function RootLayout({
         <div className="area-page">
           <CustomHeader />
           <div className="area-content">{children}</div>
+          <Toaster />
           <CustomFooter />
         </div>
       </body>

@@ -152,7 +152,7 @@ export function DataTable<TData, TValue>({
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="input-select-content">
-              {[1, 50, data.length].map((size) => (
+              {[10, 50, data.length].map((size) => (
                 <SelectItem
                   key={size}
                   value={String(size)}
