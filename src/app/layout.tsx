@@ -1,8 +1,8 @@
 import CustomFooter from "@/layouts/CustomFooter";
 import CustomHeader from "@/layouts/CustomHeader";
 import type { Metadata } from "next";
-import "./globals.css";
 import { Toaster } from "sonner";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Tampil Data Pelanggan",

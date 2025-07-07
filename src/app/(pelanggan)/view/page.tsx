@@ -2,7 +2,8 @@
 import CustomButton from "@/components/CustomButton";
 import CustomReloadButton from "@/components/CustomReloadButton";
 import { DataTable } from "@/components/ui/data-table";
-import { columns } from "@/features/user";
+import { CUSTOM_TEXT } from "@/constants/CustomText";
+import { pelanggan } from "@/features/pelanggan";
 import { getData } from "@/models/user";
 import { tb_pelanggan } from "@prisma/client";
 import { Plus, RefreshCcw } from "lucide-react";
@@ -32,13 +33,13 @@ export default function PelangganViewPage() {
       <div className="area-view-button">
         <CustomButton
           path="/add"
-          label="Tambah Data"
+          label={CUSTOM_TEXT.text_tambah_data}
           className="btn-primary"
           icon={Plus}
         />
 
         <CustomReloadButton
-          label="Refresh Data"
+          label={CUSTOM_TEXT.text_refresh_data}
           className="btn-secondary"
           icon={RefreshCcw}
           onClick={() => setFilter("")}
@@ -46,7 +47,7 @@ export default function PelangganViewPage() {
       </div>
 
       <DataTable
-        columns={columns}
+        columns={pelanggan}
         data={data}
         filter={filter}
         setFilter={setFilter}

@@ -8,6 +8,9 @@ const prisma = new PrismaClient();
 export const getData = async () => {
 
     const getData = await prisma.tb_pelanggan.findMany({
+        orderBy: {
+            id: "asc"
+        }
     });
 
     return getData;

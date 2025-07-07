@@ -1,9 +1,11 @@
 "use client";
 
+import { CUSTOM_TEXT } from "@/constants/CustomText";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { X, Image as ImageX } from "lucide-react";
+import { X } from "lucide-react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 interface CustomImageDialogProps {
   thumbnailSrc: string;
@@ -15,9 +17,41 @@ interface CustomImageDialogProps {
 export function CustomImageDialog({
   thumbnailSrc,
   fullImageSrc,
-  alt = "Preview",
+  alt = "",
   thumbnailClassName = "rounded-sm object-cover w-full h-full lg:w-15 lg:h-15 hover:opacity-80 transition",
 }: CustomImageDialogProps) {
+  const [isImageError, setIsImageError] = useState(false);
+
+  const isValidImage = (src?: string) => {
+    return typeof src === "string" && src.trim() !== "" && !src.endsWith("/");
+  };
+
+  useEffect(() => {
+    if (!isValidImage(fullImageSrc)) {
+      setIsImageError(true);
+      return;
+    }
+
+    const img = new window.Image();
+    img.src = fullImageSrc;
+    img.onload = () => setIsImageError(false);
+    img.onerror = () => setIsImageError(true);
+  }, [fullImageSrc]);
+
+  if (!isValidImage(thumbnailSrc) || isImageError) {
+    return (
+      <div className="flex justify-center">
+        <Image
+          priority
+          src={`/${CUSTOM_TEXT.dir_images}/${CUSTOM_TEXT.file_noimage}`}
+          alt="No Image"
+          width={50}
+          height={50}
+        />
+      </div>
+    );
+  }
+
   return (
     <DialogPrimitive.Root>
       <DialogPrimitive.Trigger asChild>
@@ -26,6 +60,7 @@ export function CustomImageDialog({
             priority
             src={thumbnailSrc}
             alt={alt}
+            title={CUSTOM_TEXT.text_zoom_foto}
             width={50}
             height={50}
             className={thumbnailClassName}
@@ -35,12 +70,9 @@ export function CustomImageDialog({
 
       <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay className="fixed inset-0 bg-black/50 z-50" />
-        <DialogPrimitive.Content
-          
-          className="fixed left-1/2 top-1/2 z-50 w-full max-w-[90vw] max-h-[90vh] sm:max-w-md -translate-x-1/2 -translate-y-1/2">            
+        <DialogPrimitive.Content className="fixed left-1/2 top-1/2 z-50 w-full max-w-[90vw] max-h-[90vh] sm:max-w-md -translate-x-1/2 -translate-y-1/2">
           <VisuallyHidden>
             <DialogPrimitive.Title className="flex items-center gap-2 mb-4 text-lg font-semibold">
-              <ImageX />
               {alt}
             </DialogPrimitive.Title>
 

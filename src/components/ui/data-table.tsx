@@ -10,29 +10,6 @@ function getPaginationRange(
     return Array.from({ length: total }, (_, i) => i + 1);
   }
 
-  // const firstPages = [1];
-  // const lastPages = [total];
-  // const isInFirstBlock = current <= 2;
-  // const isInLastBlock = current >= total - 1;
-
-  // if (isInFirstBlock) {
-  //   pages.push(...firstPages);
-  //   if (current === 2) pages.push(current);
-  //   pages.push("ellipsis");
-  //   pages.push(...lastPages);
-  // } else if (isInLastBlock) {
-  //   pages.push(...firstPages);
-  //   pages.push("ellipsis");
-  //   if (current === total - 1) pages.push(current);
-  //   pages.push(...lastPages);
-  // } else {
-  //   pages.push(...firstPages);
-  //   pages.push("ellipsis");
-  //   pages.push(current);
-  //   pages.push("ellipsis");
-  //   pages.push(...lastPages);
-  // }
-
   const firstPages = [1];
   const lastPages = [total];
   const middlePages = Math.floor(total / 2);
@@ -91,6 +68,7 @@ import {
 import { CircleX } from "lucide-react";
 import { useState } from "react";
 import { CustomInput } from "../CustomInput";
+import { CUSTOM_TEXT } from "@/constants/CustomText";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -136,7 +114,7 @@ export function DataTable<TData, TValue>({
     <div className="space-y-4">
       <div className="area-search">
         <CustomInput
-          placeholder="Cari Data"
+          placeholder={CUSTOM_TEXT.text_cari_data}
           value={filter}
           onChange={setFilter}
           className="input-text sm:max-w-sm"
@@ -222,7 +200,7 @@ export function DataTable<TData, TValue>({
         </div>
       ) : (
         <div className="table-error">
-          <CircleX className="mr-2" /> Data Tidak Ditemukan !
+          <CircleX className="mr-2" /> {CUSTOM_TEXT.text_data_kosong}
         </div>
       )}
 
@@ -234,8 +212,7 @@ export function DataTable<TData, TValue>({
             Hal. {pageIndex + 1} / {pageCount}
           </span> */}
             <span>
-              Data {pageIndex * pageSize + 1} -{" "}
-              {Math.min((pageIndex + 1) * pageSize, total)} dari {total} Data
+              {`Data ${pageIndex * pageSize + 1} - ${Math.min((pageIndex + 1) * pageSize, total)} dari ${total} Data`}
             </span>
           </div>
 

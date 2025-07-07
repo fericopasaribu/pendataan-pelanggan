@@ -5,7 +5,7 @@ export default function CustomHeader() {
   return (
     <div className="area-header">
       <Image
-        src="/images/logo.png"
+        src={`/${CUSTOM_TEXT.dir_images}/${CUSTOM_TEXT.file_logo}`}
         width={64}
         height={64}
         alt="Logo"
@@ -13,7 +13,7 @@ export default function CustomHeader() {
         className="image-header"
         priority
       />
-      <div className="text-header">{CUSTOM_TEXT.company}</div>
+      <div className="text-header">{CUSTOM_TEXT.text_company}</div>
     </div>
   );
 }

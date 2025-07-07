@@ -187,7 +187,7 @@
   .btn-alert-secondary {
     padding: var(--gap-button);
     /* width: 210px; */
-    @apply !rounded-full cursor-pointer transition duration-300 active:scale-95 outline-0 flex items-center justify-center mb-2.5 w-full !h-12 sm:w-30 sm:m-1 focus:!border-transparent focus:!ring-2 focus:!ring-[var(--color-sort)];
+    @apply !rounded-full cursor-pointer transition duration-300 active:scale-95 outline-0 flex items-center justify-center mb-2.5 w-full !h-12 sm:w-30 sm:m-1 focus:!ring-0 focus:!ring-[var(--color-sort)];
   }
 
   .btn-primary,

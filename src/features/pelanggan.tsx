@@ -3,15 +3,10 @@
 import { CustomDeleteButton } from "@/components/CustomDeleteButton";
 import { CustomImageDialog } from "@/components/CustomImageDialog";
 import { Button } from "@/components/ui/button";
+import { CUSTOM_TEXT } from "@/constants/CustomText";
 import { deleteData } from "@/models/user";
 import { ColumnDef } from "@tanstack/react-table";
-import {
-  ArrowDown,
-  ArrowUp,
-  CircleCheck,
-  CircleX,
-  Pencil
-} from "lucide-react";
+import { ArrowDown, ArrowUp, CircleCheck, CircleX, Pencil } from "lucide-react";
 import { toast } from "sonner";
 
 type Pelanggan = {
@@ -25,7 +20,6 @@ type Pelanggan = {
 
 const handleEditData = (id: number) => {
   console.log("Edit item", id);
-  // Arahkan ke halaman edit atau buka modal
 };
 
 const handleDeleteData = async (id: number, nomor: string) => {
@@ -38,11 +32,11 @@ const handleDeleteData = async (id: number, nomor: string) => {
           <div className="icon-success">
             <CircleCheck className="toast-icon" />
           </div>
-          <span>Data Pelanggan : {nomor} Berhasil Dihapus</span>
+          <span>{`${CUSTOM_TEXT.text_data_pelanggan} : ${nomor} ${CUSTOM_TEXT.text_sukses_hapus}`}</span>
         </div>
       ),
       {
-        duration: 3000,
+        duration: CUSTOM_TEXT.inteval,
         position: "top-center",
       }
     );
@@ -53,25 +47,25 @@ const handleDeleteData = async (id: number, nomor: string) => {
           <div className="icon-error">
             <CircleX className="toast-icon" />
           </div>
-          <span>Data Pelanggan : {nomor} Gagal Dihapus !</span>
+          <span>{`${CUSTOM_TEXT.text_data_pelanggan} : ${nomor} ${CUSTOM_TEXT.text_gagal_hapus}`}</span>
         </div>
       ),
       {
-        duration: 3000,
+        duration: CUSTOM_TEXT.inteval,
         position: "top-center",
       }
     );
   } finally {
     setTimeout(() => {
       location.reload();
-    }, 3000);
+    }, CUSTOM_TEXT.inteval);
   }
 };
 
-export const columns: ColumnDef<Pelanggan>[] = [
+export const pelanggan: ColumnDef<Pelanggan>[] = [
   {
     id: "aksi",
-    header: () => <div className="text-center">Aksi</div>,
+    header: () => <div className="text-center">{CUSTOM_TEXT.text_aksi}</div>,
     cell: ({ row }) => {
       const data = row.original;
       return (
@@ -83,16 +77,9 @@ export const columns: ColumnDef<Pelanggan>[] = [
             onClick={() => handleEditData(data.id)}>
             <Pencil />
           </Button>
-          {/* <Button
-            variant="ghost"
-            className="btn-action-delete"
-            title="Hapus Data"
-            onClick={() => {HapusButton(id)}}>
-            <Trash />
-          </Button> */}
 
           <CustomDeleteButton
-            source="Pelanggan"
+            source={CUSTOM_TEXT.text_data_pelanggan}
             id={data.id}
             text={data.nomor}
             onDelete={() => handleDeleteData(data.id, data.nomor)}
@@ -112,7 +99,7 @@ export const columns: ColumnDef<Pelanggan>[] = [
           variant="ghost"
           className="table-th-title p-7 text-[1em]"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Nomor
+          {CUSTOM_TEXT.text_nomor}
           <div className="table-th-sort">
             {sort === "asc" ? (
               <>
@@ -146,7 +133,7 @@ export const columns: ColumnDef<Pelanggan>[] = [
           variant="ghost"
           className="table-th-title p-7 text-[1em]"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Nama
+          {CUSTOM_TEXT.text_nama}
           <div className="table-th-sort">
             {sort === "asc" ? (
               <>
@@ -179,7 +166,7 @@ export const columns: ColumnDef<Pelanggan>[] = [
           variant="ghost"
           className="table-th-title p-7 text-[1em]"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Alamat
+          {CUSTOM_TEXT.text_alamat}
           <div className="table-th-sort">
             {sort === "asc" ? (
               <>
@@ -213,7 +200,7 @@ export const columns: ColumnDef<Pelanggan>[] = [
           variant="ghost"
           className="table-th-title p-7 text-[1em]"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Telepon
+          {CUSTOM_TEXT.text_telepon}
           <div className="table-th-sort">
             {sort === "asc" ? (
               <>
@@ -240,16 +227,16 @@ export const columns: ColumnDef<Pelanggan>[] = [
 
   {
     accessorKey: "foto",
-    header: () => <div>Foto</div>,
+    header: () => <div>{CUSTOM_TEXT.text_foto}</div>,
     cell: ({ row }) => {
       const url = row.original.foto;
-      const fullImage = `/uploads/${url}`;
+      const fullImage = `/${CUSTOM_TEXT.dir_uploads}/${url}`;
 
       return (
         <CustomImageDialog
-          thumbnailSrc={fullImage} // kecil (e.g. 50x50)
-          fullImageSrc={fullImage} // ukuran penuh
-          alt={`Foto ${url}`} // opsional
+          thumbnailSrc={fullImage}
+          fullImageSrc={fullImage}
+          alt={`${CUSTOM_TEXT.text_foto} ${url}`}
         />
       );
     },

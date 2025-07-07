@@ -1,4 +1,3 @@
-import { Info, Trash } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,6 +10,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { CUSTOM_TEXT } from "@/constants/CustomText";
+import { Info, Trash } from "lucide-react";
 
 interface CustomDeleteButtonProps {
   source: string;
@@ -40,22 +41,22 @@ export function CustomDeleteButton({
         <AlertDialogHeader>
           <AlertDialogTitle className="alert-title text-xl">
             <Info className="w-5 h-5" />
-            Informasi
+            {CUSTOM_TEXT.text_informasi}
           </AlertDialogTitle>
           <AlertDialogDescription className="alert-desc text-base">
-            Data {source}:{" "}
-            <span className="text-[var(--color-error)]">{text}</span> Ingin
-            Dihapus ?
+            {`${source} : `}
+            <span className="text-[var(--color-error)]">{text}</span>{" "}
+            {CUSTOM_TEXT.text_konfirmasi_hapus}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel className="btn-alert-secondary">
-            Tidak
+            {CUSTOM_TEXT.text_tidak}
           </AlertDialogCancel>
           <AlertDialogAction
             className="btn-alert-primary"
             onClick={() => onDelete()}>
-            Ya
+            {CUSTOM_TEXT.text_ya}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
