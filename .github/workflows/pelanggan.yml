@@ -20,18 +20,21 @@ jobs:
         with:
           node-version: "20"
 
-      - name: 🧹 Bersihkan cache npm
+      - name: 🧹 Clean npm cache
         run: npm cache clean --force
 
-      - name: 📦 Install dependencies (tanpa package-lock + bypass peer deps)
+      - name: 📦 Install dependencies
         run: npm install --no-package-lock --legacy-peer-deps
+
+      - name: 🔧 Generate Prisma Client
+        run: npx prisma generate
 
       - name: 🧹 Run Linter
         run: npm run lint
 
       - name: 🧪 Run Tests
         run: npm test
-        continue-on-error: true  # Biarkan test gagal tidak menghentikan workflow (opsional)
+        continue-on-error: true
 
       - name: 🛠️ Build Project
         run: npm run build

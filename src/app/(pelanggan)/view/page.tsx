@@ -6,6 +6,7 @@ import { CUSTOM_TEXT } from "@/constants/CustomText";
 import { pelanggan } from "@/features/pelanggan";
 import { getData } from "@/models/user";
 import { tb_pelanggan } from "@prisma/client";
+// import { tb_pelanggan } from "@prisma/client";
 import { Plus, RefreshCcw } from "lucide-react";
 import { useEffect, useState } from "react";
 
