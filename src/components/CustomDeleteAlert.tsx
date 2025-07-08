@@ -50,11 +50,11 @@ export function CustomDeleteAlert({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel className="btn-alert-secondary order-2 sm:order-1">
+          <AlertDialogCancel className="btn-alert-secondary">
             {CUSTOM_TEXT.text_tidak}
           </AlertDialogCancel>
           <AlertDialogAction
-            className="btn-alert-primary order-1 sm:order-2"
+            className="btn-alert-primary"
             onClick={() => onDelete()}>
             {CUSTOM_TEXT.text_ya}
           </AlertDialogAction>
