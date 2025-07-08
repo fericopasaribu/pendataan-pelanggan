@@ -6,37 +6,37 @@ on:
   pull_request:
     branches: [main]
 
-env:
-  DATABASE_URL: ${{ secrets.DATABASE_URL }} # Pastikan secret ini diset di repo
-
 jobs:
   build:
-    name: Build & Test Pelanggan App
+    name: Build & Test Pelanggan
     runs-on: ubuntu-latest
 
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }} 
+
     steps:
-      - name: 🧾 Checkout source code
+      - name: Checkout source code
         uses: actions/checkout@v4
 
-      - name: 🟢 Setup Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
 
-      - name: 📦 Clean and install dependencies
+      - name: Clean and install dependencies
         run: |
           npm cache clean --force
           npm install --no-package-lock --legacy-peer-deps
 
-      - name: 🔧 Generate Prisma Client
+      - name: Generate Prisma Client
         run: npx prisma generate
 
-      - name: 🧹 Run Linter
+      - name: Run Linter
         run: npm run lint
 
-      - name: 🧪 Run Tests
+      - name: Run Tests
         run: npm test
         continue-on-error: true
 
-      - name: 🛠️ Build Next.js Project
+      - name: Build Next.js Project
         run: npm run build
