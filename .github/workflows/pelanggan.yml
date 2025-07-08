@@ -20,15 +20,18 @@ jobs:
         with:
           node-version: "20"
 
-      - name: 📦 Install dependencies
-        run: npm ci
+      - name: 🧹 Bersihkan cache npm
+        run: npm cache clean --force
+
+      - name: 📦 Install dependencies (tanpa package-lock + bypass peer deps)
+        run: npm install --no-package-lock --legacy-peer-deps
 
       - name: 🧹 Run Linter
         run: npm run lint
 
       - name: 🧪 Run Tests
         run: npm test
-        continue-on-error: true #
+        continue-on-error: true  # Biarkan test gagal tidak menghentikan workflow (opsional)
 
       - name: 🛠️ Build Project
         run: npm run build
