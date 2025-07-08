@@ -23,15 +23,15 @@ jobs:
         with:
           node-version: "20"
 
-      # - name: Clean and install dependencies
-      #   run: |
-      #     npm cache clean --force
-      #     npm install --no-package-lock --legacy-peer-deps
-
       - name: Clean and install dependencies
         run: |
           npm cache clean --force
-          npm install
+          npm install --no-package-lock --legacy-peer-deps
+
+      # - name: Clean and install dependencies
+      #   run: |
+      #     npm cache clean --force
+      #     npm install
 
       - name: Generate Prisma Client
         run: npx prisma generate
