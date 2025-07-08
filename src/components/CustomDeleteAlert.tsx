@@ -13,19 +13,19 @@ import { Button } from "@/components/ui/button";
 import { CUSTOM_TEXT } from "@/constants/CustomText";
 import { Info, Trash } from "lucide-react";
 
-interface CustomDeleteButtonProps {
+interface CustomDeleteAlertProps {
   source: string;
   id: number;
   text: string;
   onDelete: () => void;
 }
 
-export function CustomDeleteButton({
+export function CustomDeleteAlert({
   source,
   //   id,
   text,
   onDelete,
-}: CustomDeleteButtonProps) {
+}: CustomDeleteAlertProps) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -50,11 +50,11 @@ export function CustomDeleteButton({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel className="btn-alert-secondary">
+          <AlertDialogCancel className="btn-alert-secondary order-2 sm:order-1">
             {CUSTOM_TEXT.text_tidak}
           </AlertDialogCancel>
           <AlertDialogAction
-            className="btn-alert-primary"
+            className="btn-alert-primary order-1 sm:order-2"
             onClick={() => onDelete()}>
             {CUSTOM_TEXT.text_ya}
           </AlertDialogAction>

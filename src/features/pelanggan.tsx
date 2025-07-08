@@ -1,6 +1,6 @@
 "use client";
 
-import { CustomDeleteButton } from "@/components/CustomDeleteButton";
+import { CustomDeleteAlert } from "@/components/CustomDeleteAlert";
 import { CustomImageDialog } from "@/components/CustomImageDialog";
 import { Button } from "@/components/ui/button";
 import { CUSTOM_TEXT } from "@/constants/CustomText";
@@ -78,7 +78,7 @@ export const pelanggan: ColumnDef<Pelanggan>[] = [
             <Pencil />
           </Button>
 
-          <CustomDeleteButton
+          <CustomDeleteAlert
             source={CUSTOM_TEXT.text_data_pelanggan}
             id={data.id}
             text={data.nomor}
