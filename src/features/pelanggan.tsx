@@ -22,9 +22,9 @@ const handleEditData = (id: number) => {
   console.log("Edit item", id);
 };
 
-const handleDeleteData = async (id: number, nomor: string) => {
+const handleDeleteData = async (id: number, nomor: string, foto: string) => {
   try {
-    await deleteData(id);
+    await deleteData(id,foto);
 
     toast.custom(
       () => (
@@ -82,7 +82,7 @@ export const pelanggan: ColumnDef<Pelanggan>[] = [
             source={CUSTOM_TEXT.text_data_pelanggan}
             id={data.id}
             text={data.nomor}
-            onDelete={() => handleDeleteData(data.id, data.nomor)}
+            onDelete={() => handleDeleteData(data.id, data.nomor, data.foto)}
           />
         </div>
       );
