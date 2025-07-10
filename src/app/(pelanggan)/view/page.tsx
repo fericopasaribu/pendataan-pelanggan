@@ -1,10 +1,10 @@
 "use client";
-import CustomButton from "@/components/CustomButton";
+import CustomViewButton from "@/components/CustomViewButton";
 import CustomReloadButton from "@/components/CustomReloadButton";
 import { DataTable } from "@/components/ui/data-table";
 import { CUSTOM_TEXT } from "@/constants/CustomText";
 import { pelanggan } from "@/features/pelanggan";
-import { getData } from "@/models/user";
+import { viewData } from "@/models/pelanggan";
 import { tb_pelanggan } from "@prisma/client";
 
 // import { tb_pelanggan } from "@prisma/client";
@@ -16,7 +16,7 @@ export default function PelangganViewPage() {
   const [data, setData] = useState<tb_pelanggan[]>([]);
 
   async function fetchData() {
-    const result = await getData();
+    const result = await viewData();
     setData(result);
   }
 
@@ -32,8 +32,9 @@ export default function PelangganViewPage() {
 
   return (
     <div>
+      <h1 className="form-title">{`${CUSTOM_TEXT.text_tampil_data} ${CUSTOM_TEXT.text_pelanggan}`}</h1>
       <div className="area-view-button">
-        <CustomButton
+        <CustomViewButton
           path="/add"
           label={CUSTOM_TEXT.text_tambah_data}
           className="btn-primary"

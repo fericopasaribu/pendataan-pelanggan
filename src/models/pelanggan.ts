@@ -8,7 +8,7 @@ import path from "path";
 const prisma = new PrismaClient();
 
 // fungsi untuk tampil data
-export const getData = async () => {
+export const viewData = async () => {
 
     const getData = await prisma.tb_pelanggan.findMany({
         orderBy: {
@@ -40,4 +40,25 @@ export const deleteData = async (id: number, fileName: string) => {
             id: id,
         },
     });
+}
+
+// fungsi untuk simpan data
+export const saveData = async (nomor: string, nama: string, alamat: string, telepon: string, foto: string) => {
+    const existing = await prisma.tb_pelanggan.findFirst({
+        where: { nomor },
+    });
+
+    if (existing) {
+        return {
+            success: false,            
+        };
+    }
+
+    await prisma.tb_pelanggan.create({
+        data: { nomor, nama, alamat, telepon, foto },
+    });
+
+    return {
+        success: true,        
+    };
 }

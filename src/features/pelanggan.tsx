@@ -2,12 +2,12 @@
 
 import { CustomDeleteAlert } from "@/components/CustomDeleteAlert";
 import { CustomImageDialog } from "@/components/CustomImageDialog";
+import CustomToast from "@/components/CustomToast";
 import { Button } from "@/components/ui/button";
 import { CUSTOM_TEXT } from "@/constants/CustomText";
-import { deleteData } from "@/models/user";
+import { deleteData } from "@/models/pelanggan";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowDown, ArrowUp, CircleCheck, CircleX, Pencil } from "lucide-react";
-import { toast } from "sonner";
+import { ArrowDown, ArrowUp, Pencil } from "lucide-react";
 
 type Pelanggan = {
   id: number;
@@ -24,37 +24,23 @@ const handleEditData = (id: number) => {
 
 const handleDeleteData = async (id: number, nomor: string, foto: string) => {
   try {
-    await deleteData(id,foto);
+    await deleteData(id, foto);
 
-    toast.custom(
-      () => (
-        <div className="toast-box">
-          <div className="icon-success">
-            <CircleCheck className="toast-icon" />
-          </div>
-          <span>{`${CUSTOM_TEXT.text_data_pelanggan} : ${nomor} ${CUSTOM_TEXT.text_sukses_hapus}`}</span>
-        </div>
-      ),
-      {
-        duration: CUSTOM_TEXT.inteval,
-        position: "top-center",
-      }
-    );
+    CustomToast({
+      type: "success",
+      source: CUSTOM_TEXT.text_data_pelanggan,
+      value: nomor,
+      message: CUSTOM_TEXT.text_sukses_hapus,
+      duration: CUSTOM_TEXT.inteval,
+    });
   } catch {
-    toast.custom(
-      () => (
-        <div className="toast-box">
-          <div className="icon-error">
-            <CircleX className="toast-icon" />
-          </div>
-          <span>{`${CUSTOM_TEXT.text_data_pelanggan} : ${nomor} ${CUSTOM_TEXT.text_gagal_hapus}`}</span>
-        </div>
-      ),
-      {
-        duration: CUSTOM_TEXT.inteval,
-        position: "top-center",
-      }
-    );
+    CustomToast({
+      type: "error",
+      source: CUSTOM_TEXT.text_data_pelanggan,
+      value: nomor,
+      message: CUSTOM_TEXT.text_gagal_hapus,
+      duration: CUSTOM_TEXT.inteval,
+    });
   } finally {
     setTimeout(() => {
       location.reload();
@@ -87,7 +73,7 @@ export const pelanggan: ColumnDef<Pelanggan>[] = [
         </div>
       );
     },
-    meta: { align: "center", width: "w-[7%]" },
+    meta: { align: "center", width: "w-[8%]" },
   },
 
   {
@@ -121,7 +107,7 @@ export const pelanggan: ColumnDef<Pelanggan>[] = [
         </Button>
       );
     },
-    meta: { align: "center", width: "w-[10%]" },
+    meta: { align: "center", width: "w-[15%]" },
     // enableGlobalFilter: true,
   },
   {
@@ -188,7 +174,14 @@ export const pelanggan: ColumnDef<Pelanggan>[] = [
         </Button>
       );
     },
-    meta: { align: "justify", width: "w-[43%]" },
+    cell: ({ row }) => {
+      return (
+        <div className="max-w-[600px] truncate whitespace-nowrap overflow-hidden text-ellipsis">
+          {row.original.alamat}
+        </div>
+      );
+    },
+    meta: { align: "justify", width: "w-[37%]" },
   },
 
   {

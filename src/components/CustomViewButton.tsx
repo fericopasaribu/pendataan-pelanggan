@@ -3,19 +3,19 @@
 import { LucideIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-interface CustomButtonProps {
+interface CustomViewButtonProps {
   label?: string;
   path?: string;
   className?: string;
   icon?: LucideIcon;
 }
 
-export default function CustomButton({
+export default function CustomViewButton({
   label = "",
   path = "",
   className = "",
   icon: Icon,
-}: CustomButtonProps) {
+}: CustomViewButtonProps) {
   const router = useRouter();
 
   return (

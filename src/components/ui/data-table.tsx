@@ -117,7 +117,8 @@ export function DataTable<TData, TValue>({
           placeholder={CUSTOM_TEXT.text_cari_data}
           value={filter}
           onChange={setFilter}
-          className="input-text sm:max-w-sm"
+          className="input-search-text"
+          maxLength={100}
         />
 
         {total > 0 && (
