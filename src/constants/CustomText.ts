@@ -1,7 +1,9 @@
 const pelanggan = "Pelanggan";
 const format_isi = "Format Isi"
+
 export const CUSTOM_TEXT = {
-  inteval: 3000,
+  interval: 3000,
+  size_2MB: 2 * 1024 * 1024,
   text_company: "Company Name",
   text_year: "2025",
   text_zoom_foto: "Zoom Foto",
@@ -20,6 +22,9 @@ export const CUSTOM_TEXT = {
   text_wajib_isi: "Harus Diisi !",
   text_wajib_pilih: "Harus Dipilih !",
   text_wajib_isi_pilih: "Harus Diisi / Dipilih !",
+  text_error_format: "Format File Tidak Sesuai !",
+  text_error_size: "Ukuran File Tidak Sesuai !",
+  text_pilih_file: "Pilih / Drop File",
   text_tampil_data: "Tampil Data",
   text_tambah_data: "Tambah Data",
   text_ubah_data: "Ubah Data",
@@ -37,10 +42,10 @@ export const CUSTOM_TEXT = {
   text_ubah: "Ubah",
   text_batal: "Batal",
 
-  format_isi_angka : `${format_isi} : 0-9`,
-  format_isi_nama : `${format_isi} : a-zA-Z .,`,
-  format_isi_text : `${format_isi} : a-zA-Z `,
-  format_isi_text_plus : `${format_isi} : 0-9a-zA-Z '"-.,`,
+  format_isi_angka: `${format_isi} : 0-9`,
+  format_isi_nama: `${format_isi} : a-zA-Z .,`,
+  format_isi_text: `${format_isi} : a-zA-Z `,
+  format_isi_text_plus: `${format_isi} : 0-9a-zA-Z '"-.,`,
 
 
   dir_images: "images",
@@ -48,4 +53,12 @@ export const CUSTOM_TEXT = {
 
   file_logo: "logo.png",
   file_noimage: "noimage.png",
+  file_noimage2: "noimage2.png",
+
+  upload_label_format: "* Format File",
+  upload_label_size: "* Ukuran File Maks.",
+  upload_gambar_format: "JPG / JPEG / PNG",
+  upload_gambar_size: "2 MB",
+  upload_dokumen_format: "PDF",
+  upload_dokumen_size: "5 MB",
 };

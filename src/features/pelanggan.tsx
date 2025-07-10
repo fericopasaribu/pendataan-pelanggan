@@ -31,7 +31,7 @@ const handleDeleteData = async (id: number, nomor: string, foto: string) => {
       source: CUSTOM_TEXT.text_data_pelanggan,
       value: nomor,
       message: CUSTOM_TEXT.text_sukses_hapus,
-      duration: CUSTOM_TEXT.inteval,
+      duration: CUSTOM_TEXT.interval,
     });
   } catch {
     CustomToast({
@@ -39,12 +39,12 @@ const handleDeleteData = async (id: number, nomor: string, foto: string) => {
       source: CUSTOM_TEXT.text_data_pelanggan,
       value: nomor,
       message: CUSTOM_TEXT.text_gagal_hapus,
-      duration: CUSTOM_TEXT.inteval,
+      duration: CUSTOM_TEXT.interval,
     });
   } finally {
     setTimeout(() => {
       location.reload();
-    }, CUSTOM_TEXT.inteval);
+    }, CUSTOM_TEXT.interval);
   }
 };
 

@@ -7,6 +7,6 @@ interface CustomErrorProps {
   className?: string;
 }
 
-export function CustomError({ value, className = "error-text" }: CustomErrorProps) {
-  return <div className={className}><Info className="error-icon"/>{value}</div>;
+export function CustomError({ value, className}: CustomErrorProps) {
+  return <div className={`error-text ${className || ""}`}><Info className="error-icon"/>{value}</div>;
 }

@@ -345,6 +345,10 @@
     @apply text-[var(--color-error)];
   }
 
+  .area-form-content {
+    @apply grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-5 mt-5;
+  }
+  
   .area-form-button {
     @apply flex mt-5 flex-col sm:flex-row;
   }
@@ -355,6 +359,10 @@
 
   .error-icon {
     @apply mr-2 w-4 h-4;
+  }
+
+  .area-upload {
+    @apply text-center text-sm italic text-[var(--color-border)];
   }
 }
 

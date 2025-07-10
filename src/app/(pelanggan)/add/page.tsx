@@ -2,15 +2,12 @@
 
 import { CustomError } from "@/components/CustomError";
 import CustomFormButton from "@/components/CustomFormButton";
+import CustomImageUpload from "@/components/CustomImageUpload";
 import { CustomInput } from "@/components/CustomInput";
 import { CustomLabel } from "@/components/CustomLabel";
 import CustomToast from "@/components/CustomToast";
 import { CUSTOM_TEXT } from "@/constants/CustomText";
-import {
-  filterForName,
-  filterForNumber,
-  filterForTextPlus,
-} from "@/lib/scripts";
+import { filterForName, filterForNumber } from "@/lib/scripts";
 import { saveData } from "@/models/pelanggan";
 import { Ban, Check } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -18,11 +15,20 @@ import { useState } from "react";
 
 export default function PelangganAddPage() {
   const router = useRouter();
-  const [form, setForm] = useState({
+
+  // const [fileFoto, setFileFoto] = useState<File | null>(null);
+  const [form, setForm] = useState<{
+    nomor: string;
+    nama: string;
+    alamat: string;
+    telepon: string;
+    fileFoto: File | null;
+  }>({
     nomor: "",
     nama: "",
     alamat: "",
     telepon: "",
+    fileFoto: null,
   });
 
   const [error, setError] = useState({
@@ -32,12 +38,14 @@ export default function PelangganAddPage() {
     telepon: false,
   });
 
+  // const [imageError, setImageError] = useState(false);
+
   const handleSaveData = async (
     nomor: string,
     nama: string,
     alamat: string,
     telepon: string,
-    foto: string
+    foto: File | null
   ) => {
     const errorTemp = {
       nomor: !form.nomor.trim(),
@@ -59,24 +67,19 @@ export default function PelangganAddPage() {
           source: CUSTOM_TEXT.text_data_pelanggan,
           value: nomor,
           message: CUSTOM_TEXT.text_sukses_simpan,
-          duration: CUSTOM_TEXT.inteval,
+          duration: CUSTOM_TEXT.interval,
         });
 
-        router.refresh();
-
-        setForm({
-          nomor: "",
-          nama: "",
-          alamat: "",
-          telepon: "",
-        });
+        setTimeout(() => {
+          location.reload();
+        }, CUSTOM_TEXT.interval);
       } else {
         CustomToast({
           type: "error",
           source: CUSTOM_TEXT.text_data_pelanggan,
           value: nomor,
           message: CUSTOM_TEXT.text_gagal_simpan,
-          duration: CUSTOM_TEXT.inteval,
+          duration: CUSTOM_TEXT.interval,
         });
       }
     }
@@ -85,7 +88,21 @@ export default function PelangganAddPage() {
   return (
     <div>
       <h1 className="form-title">{`${CUSTOM_TEXT.text_tambah_data} ${CUSTOM_TEXT.text_pelanggan}`}</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-5">
+      <div className="area-upload">
+        <CustomImageUpload
+          onChange={(file) => setForm({ ...form, fileFoto: file })}
+          // onErrorChange={(hasError) => setImageError(hasError)}
+        />
+        <div className="mt-[-10px]">
+          {CUSTOM_TEXT.upload_label_format} :{" "}
+          <strong>{CUSTOM_TEXT.upload_gambar_format}</strong>
+        </div>
+        <div>
+          {CUSTOM_TEXT.upload_label_size} :{" "}
+          <strong>{CUSTOM_TEXT.upload_gambar_size}</strong>
+        </div>
+      </div>
+      <div className="area-form-content">
         <div>
           <CustomLabel value={CUSTOM_TEXT.text_nomor} required />
           <CustomInput
@@ -166,7 +183,13 @@ export default function PelangganAddPage() {
           className="btn-primary"
           icon={Check}
           onClick={() =>
-            handleSaveData(form.nomor, form.nama, form.alamat, form.telepon, "")
+            handleSaveData(
+              form.nomor,
+              form.nama,
+              form.alamat,
+              form.telepon,
+              form.fileFoto
+            )
           }
         />
 
