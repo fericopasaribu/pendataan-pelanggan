@@ -23,6 +23,7 @@
   --color-sort: #888888;
   --color-error: #ff3f33;
   --color-success: #37afe1;
+  --color-detail: var(--color-black);
   --color-edit: var(--color-success);
   --color-delete: var(--color-error);
   --font-inter: "Inter", sans-serif;
@@ -298,9 +299,14 @@
     @apply flex items-center justify-center gap-2;
   }
 
+  .btn-action-detail,
   .btn-action-edit,
   .btn-action-delete {
     @apply text-[var(--color-white)] hover:!text-[var(--color-white)] cursor-pointer focus:!border-transparent focus:!ring-2 focus:!ring-[var(--color-sort)];
+  }
+
+  .btn-action-detail {
+    @apply bg-[var(--color-detail)] hover:!bg-[var(--color-detail)];
   }
 
   .btn-action-edit {
@@ -318,12 +324,12 @@
   }
 
   .alert-desc {
-    @apply pt-1 pb-5 !text-[var(--color-black)];
+    @apply w-full text-center pt-1 pb-5 !text-[var(--color-black)];
   }
 
   .toast-box {
     font-family: var(--font-inter) !important;
-    @apply flex-col justify-center rounded-md
+    @apply justify-center rounded-md
       px-10 py-5 border border-[var(--color-border)] bg-[var(--color-white)]
       text-[var(--color-black)] text-sm;
   }

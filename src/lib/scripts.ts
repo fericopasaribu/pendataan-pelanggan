@@ -32,7 +32,11 @@ export const filterForText = (value: string): string => {
     return value.replace(/[^a-zA-Z ]/g, '');
 };
 
-export const filterForTextPlus = (value: string): string => {
+export const filterForNumberText = (value: string): string => {
+    return value.replace(/[^0-9a-zA-Z -.,]/g, '');
+};
+
+export const filterForNumberTextPlus = (value: string): string => {
     return value.replace(/[^0-9a-zA-Z '"-.,]/g, '');
 };
 

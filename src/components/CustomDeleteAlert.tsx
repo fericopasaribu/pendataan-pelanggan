@@ -32,12 +32,12 @@ export function CustomDeleteAlert({
         <Button
           variant="ghost"
           className="btn-action-delete"
-          title="Hapus Data">
+          title={CUSTOM_TEXT.text_hapus_data}>
           <Trash />
         </Button>
       </AlertDialogTrigger>
 
-      <AlertDialogContent>
+      <AlertDialogContent className="w-[400px] max-w-[91vw] p-6">
         <AlertDialogHeader>
           <AlertDialogTitle className="alert-title text-xl">
             <Info className="w-5 h-5" />
@@ -45,11 +45,11 @@ export function CustomDeleteAlert({
           </AlertDialogTitle>
           <AlertDialogDescription className="alert-desc text-base">
             {`${source} : `}
-            <span className="text-[var(--color-error)]">{text}</span>{" "}
+            <span className="text-[var(--color-error)]">{text}</span><br />
             {CUSTOM_TEXT.text_konfirmasi_hapus}
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
+        <AlertDialogFooter className="!justify-center">
           <AlertDialogCancel className="btn-alert-secondary">
             {CUSTOM_TEXT.text_tidak}
           </AlertDialogCancel>

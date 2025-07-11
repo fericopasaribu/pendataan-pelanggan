@@ -7,7 +7,7 @@ import { CustomInput } from "@/components/CustomInput";
 import { CustomLabel } from "@/components/CustomLabel";
 import CustomToast from "@/components/CustomToast";
 import { CUSTOM_TEXT } from "@/constants/CustomText";
-import { filterForName, filterForNumber } from "@/lib/scripts";
+import { filterForName, filterForNumber, filterForNumberText } from "@/lib/scripts";
 import { saveData } from "@/models/pelanggan";
 import { Ban, Check } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -16,19 +16,18 @@ import { useState } from "react";
 export default function PelangganAddPage() {
   const router = useRouter();
 
-  // const [fileFoto, setFileFoto] = useState<File | null>(null);
   const [form, setForm] = useState<{
     nomor: string;
     nama: string;
     alamat: string;
     telepon: string;
-    fileFoto: File | null;
+    foto: File | null;
   }>({
     nomor: "",
     nama: "",
     alamat: "",
     telepon: "",
-    fileFoto: null,
+    foto: null,
   });
 
   const [error, setError] = useState({
@@ -37,8 +36,6 @@ export default function PelangganAddPage() {
     alamat: false,
     telepon: false,
   });
-
-  // const [imageError, setImageError] = useState(false);
 
   const handleSaveData = async (
     nomor: string,
@@ -90,8 +87,7 @@ export default function PelangganAddPage() {
       <h1 className="form-title">{`${CUSTOM_TEXT.text_tambah_data} ${CUSTOM_TEXT.text_pelanggan}`}</h1>
       <div className="area-upload">
         <CustomImageUpload
-          onChange={(file) => setForm({ ...form, fileFoto: file })}
-          // onErrorChange={(hasError) => setImageError(hasError)}
+          onChange={(file) => setForm({ ...form, foto: file })}
         />
         <div className="mt-[-10px]">
           {CUSTOM_TEXT.upload_label_format} :{" "}
@@ -145,12 +141,12 @@ export default function PelangganAddPage() {
           <CustomInput
             value={form.alamat}
             onChange={(value) => {
-              const result = filterForName(value);
+              const result = filterForNumberText(value);
               setForm({ ...form, alamat: result });
             }}
             className={error.alamat ? "input-error" : "input-text"}
             maxLength={255}
-            placeholder={CUSTOM_TEXT.format_isi_nama}
+            placeholder={CUSTOM_TEXT.format_isi_angka_text}
           />
           {error.alamat && (
             <CustomError
@@ -188,7 +184,7 @@ export default function PelangganAddPage() {
               form.nama,
               form.alamat,
               form.telepon,
-              form.fileFoto
+              form.foto
             )
           }
         />

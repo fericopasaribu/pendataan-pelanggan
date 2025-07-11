@@ -8,13 +8,11 @@ import { CUSTOM_TEXT } from "@/constants/CustomText";
 
 interface CustomImageUploadProps {
   onChange: (file: File | null) => void;
-  // onErrorChange?: (hasError: boolean) => void;
 }
 
 export default function CustomImageUpload({
   onChange,
-}: // onErrorChange,
-CustomImageUploadProps) {
+}: CustomImageUploadProps) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -23,22 +21,12 @@ CustomImageUploadProps) {
       const file = acceptedFiles[0];
       if (!file) return;
 
-      // const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
-      // const isImage = allowedTypes.includes(file.type);
       const isSizeValid = file.size <= CUSTOM_TEXT.size_2MB;
-
-      // if (!isImage) {
-      //   setError("File harus berupa gambar JPG, JPEG, atau PNG.");
-      //   setPreviewUrl(null);
-      //   onChange(null);
-      //   return;
-      // }
 
       if (!isSizeValid) {
         setError(CUSTOM_TEXT.text_error_size);
         setPreviewUrl(null);
         onChange(null);
-        // onErrorChange?.(true);
         return;
       }
 
@@ -53,7 +41,6 @@ CustomImageUploadProps) {
     setError(CUSTOM_TEXT.text_error_format);
     setPreviewUrl(null);
     onChange(null);
-    // onErrorChange?.(true);
   }, [onChange]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -85,7 +72,7 @@ CustomImageUploadProps) {
             <Image
               priority
               src={previewUrl}
-              alt="Preview"
+              alt={previewUrl}
               fill
               sizes="300px"
               className="rounded-md object-cover"

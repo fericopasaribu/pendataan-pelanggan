@@ -1,13 +1,11 @@
 "use client";
 
-import { CustomDeleteAlert } from "@/components/CustomDeleteAlert";
 import { CustomImageDialog } from "@/components/CustomImageDialog";
-import CustomToast from "@/components/CustomToast";
+import PelangganActions from "@/components/PelangganActions";
 import { Button } from "@/components/ui/button";
 import { CUSTOM_TEXT } from "@/constants/CustomText";
-import { deleteData } from "@/models/pelanggan";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowDown, ArrowUp, Pencil } from "lucide-react";
+import { ArrowDown, ArrowUp } from "lucide-react";
 
 type Pelanggan = {
   id: number;
@@ -18,62 +16,15 @@ type Pelanggan = {
   foto: string;
 };
 
-const handleEditData = (id: number) => {
-  console.log("Edit item", id);
-};
-
-const handleDeleteData = async (id: number, nomor: string, foto: string) => {
-  try {
-    await deleteData(id, foto);
-
-    CustomToast({
-      type: "success",
-      source: CUSTOM_TEXT.text_data_pelanggan,
-      value: nomor,
-      message: CUSTOM_TEXT.text_sukses_hapus,
-      duration: CUSTOM_TEXT.interval,
-    });
-  } catch {
-    CustomToast({
-      type: "error",
-      source: CUSTOM_TEXT.text_data_pelanggan,
-      value: nomor,
-      message: CUSTOM_TEXT.text_gagal_hapus,
-      duration: CUSTOM_TEXT.interval,
-    });
-  } finally {
-    setTimeout(() => {
-      location.reload();
-    }, CUSTOM_TEXT.interval);
-  }
-};
-
 export const pelanggan: ColumnDef<Pelanggan>[] = [
   {
     id: "aksi",
     header: () => <div className="text-center">{CUSTOM_TEXT.text_aksi}</div>,
     cell: ({ row }) => {
-      const data = row.original;
-      return (
-        <div className="area-btn-action">
-          <Button
-            variant="ghost"
-            className="btn-action-edit"
-            title="Edit Data"
-            onClick={() => handleEditData(data.id)}>
-            <Pencil />
-          </Button>
-
-          <CustomDeleteAlert
-            source={CUSTOM_TEXT.text_data_pelanggan}
-            id={data.id}
-            text={data.nomor}
-            onDelete={() => handleDeleteData(data.id, data.nomor, data.foto)}
-          />
-        </div>
-      );
+      const { id, nomor, foto } = row.original;
+      return <PelangganActions id={id} nomor={nomor} foto={foto} />;
     },
-    meta: { align: "center", width: "w-[8%]" },
+    meta: { align: "center", width: "w-[10%]" },
   },
 
   {
@@ -181,7 +132,7 @@ export const pelanggan: ColumnDef<Pelanggan>[] = [
         </div>
       );
     },
-    meta: { align: "justify", width: "w-[37%]" },
+    meta: { align: "justify", width: "w-[35%]" },
   },
 
   {

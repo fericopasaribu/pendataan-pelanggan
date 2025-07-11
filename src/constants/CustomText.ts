@@ -28,6 +28,8 @@ export const CUSTOM_TEXT = {
   text_tampil_data: "Tampil Data",
   text_tambah_data: "Tambah Data",
   text_ubah_data: "Ubah Data",
+  text_hapus_data: "Hapus Data",
+  text_detail_data: "Detail Data",
   text_refresh_data: "Refresh Data",
   text_cari_data: "Cari Data",
   text_loading: "Mohon Tunggu ...",
@@ -44,8 +46,7 @@ export const CUSTOM_TEXT = {
 
   format_isi_angka: `${format_isi} : 0-9`,
   format_isi_nama: `${format_isi} : a-zA-Z .,`,
-  format_isi_text: `${format_isi} : a-zA-Z `,
-  format_isi_text_plus: `${format_isi} : 0-9a-zA-Z '"-.,`,
+  format_isi_angka_text: `${format_isi} : 0-9a-zA-Z -.,`,
 
 
   dir_images: "images",

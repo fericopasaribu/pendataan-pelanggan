@@ -1,5 +1,5 @@
-import { toast } from "sonner";
 import { CircleCheck, CircleX } from "lucide-react";
+import { toast } from "sonner";
 
 type ToastType = "success" | "error";
 
@@ -27,46 +27,15 @@ export default function CustomToast({
         <div className={iconClass}>
           <Icon className="toast-icon" />
         </div>
-        <span>
-          {source} : <span className="text-[var(--color-error)]">{value}</span>{" "}
+        <div className="w-full text-center">
+          {source} : <span className="text-[var(--color-error)]">{value}</span><br />
           {message}
-        </span>
+        </div>
       </div>
     ),
     {
       duration,
-      position: "top-center",
+      position: "top-right",
     }
   );
 }
-
-// export const CustomToast ({
-//   type,
-//   source,
-//   value,
-//   message,
-//   duration = 3000,
-// }: CustomToastProps) => {
-//   const isSuccess = type === "success";
-//   const Icon = isSuccess ? CircleCheck : CircleX;
-//   const iconClass = isSuccess ? "icon-success" : "icon-error";
-
-//   toast.custom(
-//     () => (
-//       <div className="toast-box">
-//         <div className={iconClass}>
-//           <Icon className="toast-icon" />
-//         </div>
-//         <span>
-//           {source} :{" "}
-//           <span className="text-[var(--color-error)]">{value}</span>{" "}
-//           {message}
-//         </span>
-//       </div>
-//     ),
-//     {
-//       duration,
-//       position: "top-center",
-//     }
-//   );
-// };
