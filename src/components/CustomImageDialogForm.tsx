@@ -59,7 +59,6 @@ export function CustomImageDialogForm({
               alt="No Image"
               width={150}
               height={150}
-              // className="object-cover rounded-md"
             />
           </div>
         </div>
@@ -72,8 +71,7 @@ export function CustomImageDialogForm({
       <DialogPrimitive.Trigger asChild>
         <div className="w-full max-w-md mx-auto mb-17.5">
           <div className="border border-[var(--color-border)] rounded-lg transition w-52 h-56 relative mx-auto">
-            <div className="relative w-full h-full aspect-square">
-              <div className="flex justify-center cursor-pointer">
+            <div className="relative w-full h-full aspect-square justify-center cursor-pointer">              
                 <Image
                   priority
                   src={thumbnailSrc}
@@ -83,7 +81,6 @@ export function CustomImageDialogForm({
                   sizes="300px"
                   className={thumbnailClassName}
                 />
-              </div>
             </div>
           </div>
         </div>

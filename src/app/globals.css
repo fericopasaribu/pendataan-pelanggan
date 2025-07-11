@@ -380,6 +380,10 @@
   .area-upload {
     @apply text-center text-sm italic text-[var(--color-border)];
   }
+
+  .area-loading {
+    @apply flex justify-center items-center
+  }
 }
 
 @layer utilities {

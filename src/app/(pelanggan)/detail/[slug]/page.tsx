@@ -6,6 +6,7 @@ import { CustomLabel } from "@/components/CustomLabel";
 import { CUSTOM_TEXT } from "@/constants/CustomText";
 import { detailData } from "@/models/pelanggan";
 import { ArrowLeft } from "lucide-react";
+import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
@@ -25,29 +26,52 @@ export default function PelangganDetailPage() {
     nama: "",
     alamat: "",
     telepon: "",
-    foto: null,
+    foto: "",
   });
 
+  const [isLoading, setIsLoading] = useState(true);
+
   const fetchData = useCallback(async () => {
-    const result = await detailData(Number(slug));
+    const id = Number(slug);
+    const result = await detailData(id);
 
-    if (!result) return;
-
-    setForm({
-      nomor: result.nomor ?? "",
-      nama: result.nama ?? "",
-      alamat: result.alamat ?? "",
-      telepon: result.telepon ?? "",
-      foto: result.foto ?? null,
-    });
-  }, [slug]);
+    if (result.success && result.detail) {
+      setForm({
+        nomor: result.detail.nomor ?? "",
+        nama: result.detail.nama ?? "",
+        alamat: result.detail.alamat ?? "",
+        telepon: result.detail.telepon ?? "",
+        foto: result.detail.foto ?? null,
+      });
+      setIsLoading(false);
+    } else {
+      router.replace("/404");
+    }
+  }, [slug, router]);
 
   useEffect(() => {
     fetchData();
   }, [fetchData]);
 
   const url = form.foto;
-  const fullImage = `/${CUSTOM_TEXT.dir_uploads}/${url}`;
+  const fullImage =
+    form.foto === `/${CUSTOM_TEXT.dir_images}/${CUSTOM_TEXT.file_noimage}`
+      ? ``
+      : `/${CUSTOM_TEXT.dir_uploads}/${form.foto}`;
+
+  if (isLoading) {
+    return (
+      <div className="area-loading">
+        <Image
+          priority
+          src={`/${CUSTOM_TEXT.dir_images}/${CUSTOM_TEXT.file_loading}`}
+          alt={CUSTOM_TEXT.text_loading}
+          width={50}
+          height={50}
+        />
+      </div>
+    );
+  }
 
   return (
     <div>

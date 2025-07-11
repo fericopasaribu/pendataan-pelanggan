@@ -55,6 +55,7 @@ export const CUSTOM_TEXT = {
 
   file_logo: "logo.png",
   file_noimage: "noimage.png",
+  file_loading: "loading.svg",
 
   upload_label_format: "* Format File",
   upload_label_size: "* Ukuran File Maks.",

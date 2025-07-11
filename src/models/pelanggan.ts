@@ -85,12 +85,34 @@ export const saveData = async (
 };
 
 export const detailData = async (id: number) => {
+  if (!id || isNaN(id)) {
+    return { success: false };
+  }
 
-    const detail = await prisma.tb_pelanggan.findFirst({
-        where: {
-            id
-        },
-    });
+  const detail = await prisma.tb_pelanggan.findUnique({
+    where: { id },
+  });
 
-    return detail;
-}
+  return detail ? { success: true, detail } : { success: false };
+};
+
+
+
+// export const updateData = async (nomor: string,
+//     nama: string,
+//     alamat: string,
+//     telepon: string,
+//     file: File | null,
+//     id: number) => {
+
+//     await prisma.tb_pelanggan.update({
+//         where: {
+//             npm: npm_old,
+//         },
+//         data: {
+//             npm: npm,
+//             nama: nama,
+//             prodi: prodi,
+//         },
+//     });
+// }
