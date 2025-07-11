@@ -85,33 +85,33 @@ export default function PelangganEditPage() {
 
     setError(errorTemp);
 
-    const isValid = Object.values(errorTemp).every((v) => v === false);
+    // const isValid = Object.values(errorTemp).every((v) => v === false);
 
-    if (isValid) {
-      const result = await updateData(nomor, nama, alamat, telepon, foto, slug);
+    // if (isValid) {
+    //   const result = await updateData(nomor, nama, alamat, telepon, foto, slug);
 
-      if (result.success) {
-        CustomToast({
-          type: "success",
-          source: CUSTOM_TEXT.text_data_pelanggan,
-          value: nomor,
-          message: CUSTOM_TEXT.text_sukses_simpan,
-          duration: CUSTOM_TEXT.interval,
-        });
+    //   if (result.success) {
+    //     CustomToast({
+    //       type: "success",
+    //       source: CUSTOM_TEXT.text_data_pelanggan,
+    //       value: nomor,
+    //       message: CUSTOM_TEXT.text_sukses_simpan,
+    //       duration: CUSTOM_TEXT.interval,
+    //     });
 
-        setTimeout(() => {
-          location.reload();
-        }, CUSTOM_TEXT.interval);
-      } else {
-        CustomToast({
-          type: "error",
-          source: CUSTOM_TEXT.text_data_pelanggan,
-          value: nomor,
-          message: CUSTOM_TEXT.text_gagal_simpan,
-          duration: CUSTOM_TEXT.interval,
-        });
-      }
-    }
+    //     setTimeout(() => {
+    //       location.reload();
+    //     }, CUSTOM_TEXT.interval);
+    //   } else {
+    //     CustomToast({
+    //       type: "error",
+    //       source: CUSTOM_TEXT.text_data_pelanggan,
+    //       value: nomor,
+    //       message: CUSTOM_TEXT.text_gagal_simpan,
+    //       duration: CUSTOM_TEXT.interval,
+    //     });
+    //   }
+    // }
   };
 
   if (isLoading) {
