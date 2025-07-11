@@ -7,19 +7,19 @@ import { X } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-interface CustomImageDialogProps {
+interface CustomImageDialogTableProps {
   thumbnailSrc: string;
   fullImageSrc: string;
   alt?: string;
   thumbnailClassName?: string;
 }
 
-export function CustomImageDialog({
+export function CustomImageDialogTable({
   thumbnailSrc,
   fullImageSrc,
   alt = "",
   thumbnailClassName = "rounded-sm object-cover w-full h-full lg:w-15 lg:h-15 hover:opacity-80 transition",
-}: CustomImageDialogProps) {
+}: CustomImageDialogTableProps) {
   const [isImageError, setIsImageError] = useState(false);
 
   const isValidImage = (src?: string) => {

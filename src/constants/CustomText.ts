@@ -43,6 +43,7 @@ export const CUSTOM_TEXT = {
   text_simpan: "Simpan",
   text_ubah: "Ubah",
   text_batal: "Batal",
+  text_kembali: "Kembali",
 
   format_isi_angka: `${format_isi} : 0-9`,
   format_isi_nama: `${format_isi} : a-zA-Z .,`,
@@ -54,7 +55,6 @@ export const CUSTOM_TEXT = {
 
   file_logo: "logo.png",
   file_noimage: "noimage.png",
-  file_noimage2: "noimage2.png",
 
   upload_label_format: "* Format File",
   upload_label_size: "* Ukuran File Maks.",

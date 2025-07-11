@@ -83,3 +83,14 @@ export const saveData = async (
 
     return { success: true };
 };
+
+export const detailData = async (id: number) => {
+
+    const detail = await prisma.tb_pelanggan.findFirst({
+        where: {
+            id
+        },
+    });
+
+    return detail;
+}

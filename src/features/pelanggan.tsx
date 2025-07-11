@@ -1,6 +1,8 @@
 "use client";
 
-import { CustomImageDialog } from "@/components/CustomImageDialog";
+import {
+  CustomImageDialogTable
+} from "@/components/CustomImageDialogTable";
 import PelangganActions from "@/components/PelangganActions";
 import { Button } from "@/components/ui/button";
 import { CUSTOM_TEXT } from "@/constants/CustomText";
@@ -177,7 +179,7 @@ export const pelanggan: ColumnDef<Pelanggan>[] = [
       const fullImage = `/${CUSTOM_TEXT.dir_uploads}/${url}`;
 
       return (
-        <CustomImageDialog
+        <CustomImageDialogTable
           thumbnailSrc={fullImage}
           fullImageSrc={fullImage}
           alt={`${CUSTOM_TEXT.text_foto} ${url}`}

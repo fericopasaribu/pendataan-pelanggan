@@ -15,10 +15,10 @@ export default function PelangganViewPage() {
   const [filter, setFilter] = useState("");
   const [data, setData] = useState<tb_pelanggan[]>([]);
 
-  async function fetchData() {
+  const fetchData = async () => {
     const result = await viewData();
     setData(result);
-  }
+  };
 
   useEffect(() => {
     fetchData();

@@ -17,8 +17,8 @@ interface Props {
 export default function PelangganActions({ id, nomor, foto }: Props) {
   const router = useRouter();
 
-  const handleDetail = () => router.push(`/detail`);
-  const handleEdit = () => router.push(`/edit`);
+  const handleDetail = () => router.push(`/detail/${id}`);
+  const handleEdit = () => router.push(`/edit/${id}`);
 
   const handleDelete = async () => {
     try {

@@ -23,7 +23,7 @@ export default function CustomToast({
   const iconClass = isSuccess ? "icon-success" : "icon-error";
   return toast.custom(
     () => (
-      <div className="toast-box">
+      <div className={isSuccess ? "toast-box-success" : "toast-box-error" }>
         <div className={iconClass}>
           <Icon className="toast-icon" />
         </div>
