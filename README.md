@@ -34,6 +34,7 @@ Start by opening your terminal or command prompt.
     ```bash
     npm i
     ```
+- Rename ``` .env.example ``` file to ``` .env ``` 
     
 - Open the ``` .env ``` and update the ``` DATABASE_URL ``` configuration to match your PostgreSQL username, password, and database name.
     ```bash
