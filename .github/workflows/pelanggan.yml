@@ -41,5 +41,5 @@ jobs:
         run: |
           npm install -g vercel
           vercel --prod --yes --token ${{ secrets.VERCEL_TOKEN }} \
-                 --org ${{ secrets.VERCEL_ORG_ID }} \
+                 --org ${{ secrets.VERCEL_TEAM_ID }} \
                  --project ${{ secrets.VERCEL_PROJECT_ID }}
