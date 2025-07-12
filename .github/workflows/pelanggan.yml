@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }} 
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
     steps:
       - name: Checkout source code
@@ -28,21 +28,18 @@ jobs:
           npm cache clean --force
           npm install --no-package-lock --legacy-peer-deps
 
-      # - name: Clean and install dependencies
-      #   run: |
-      #     npm cache clean --force
-      #     npm install
-
       - name: Generate Prisma Client
         run: npx prisma generate
 
       - name: Run Linter
         run: npm run lint
-        
-
-      # - name: Run Tests
-      #   run: npm test
-      #   continue-on-error: true
 
       - name: Build Next.js Project
         run: npm run build
+
+      - name: Deploy to Vercel
+        run: |
+          npm install -g vercel
+          vercel --prod --yes --token ${{ secrets.VERCEL_TOKEN }} \
+                 --org ${{ secrets.VERCEL_ORG_ID }} \
+                 --project ${{ secrets.VERCEL_PROJECT_ID }}
