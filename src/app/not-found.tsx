@@ -9,8 +9,8 @@ export default function NotFound() {
         priority
         src={`/${CUSTOM_TEXT.dir_images}/${CUSTOM_TEXT.file_404}`}
         alt={CUSTOM_TEXT.text_loading}
-        width={500}
-        height={500}
+        width={600}
+        height={600}
         className="object-contain"
       />
     </div>
