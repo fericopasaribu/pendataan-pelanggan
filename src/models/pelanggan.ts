@@ -1,12 +1,11 @@
 "use server";
 
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import fs from "fs";
 import { unlink, writeFile } from "fs/promises";
 import path from "path";
 import sharp from "sharp";
 
-const prisma = new PrismaClient();
 
 export const viewData = async () => {
     return await prisma.tb_pelanggan.findMany({
