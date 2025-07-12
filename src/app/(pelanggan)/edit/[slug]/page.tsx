@@ -12,7 +12,7 @@ import {
   filterForNumber,
   filterForNumberText,
 } from "@/lib/scripts";
-import { detailData } from "@/models/pelanggan";
+import { detailData, updateData } from "@/models/pelanggan";
 import { Ban, Check } from "lucide-react";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
@@ -45,6 +45,7 @@ export default function PelangganEditPage() {
   });
 
   const [isLoading, setIsLoading] = useState(true);
+  const [oldFoto, setOldFoto] = useState("");
 
   const fetchData = useCallback(async () => {
     const id = Number(slug);
@@ -59,6 +60,7 @@ export default function PelangganEditPage() {
         telepon: result.detail.telepon ?? "",
         foto: result.detail.foto ?? null,
       });
+      setOldFoto(result.detail.foto ?? null);
       setIsLoading(false);
     } else {
       router.replace("/404");
@@ -74,7 +76,7 @@ export default function PelangganEditPage() {
     nama: string,
     alamat: string,
     telepon: string,
-    foto: File | null
+    foto: string | File | null
   ) => {
     const errorTemp = {
       nomor: !form.nomor.trim(),
@@ -85,33 +87,41 @@ export default function PelangganEditPage() {
 
     setError(errorTemp);
 
-    // const isValid = Object.values(errorTemp).every((v) => v === false);
+    const isValid = Object.values(errorTemp).every((v) => v === false);
 
-    // if (isValid) {
-    //   const result = await updateData(nomor, nama, alamat, telepon, foto, slug);
+    if (isValid) {
+      const result = await updateData(
+        nomor,
+        nama,
+        alamat,
+        telepon,
+        foto instanceof File ? foto : null,
+        Number(slug),
+        oldFoto
+      );
 
-    //   if (result.success) {
-    //     CustomToast({
-    //       type: "success",
-    //       source: CUSTOM_TEXT.text_data_pelanggan,
-    //       value: nomor,
-    //       message: CUSTOM_TEXT.text_sukses_simpan,
-    //       duration: CUSTOM_TEXT.interval,
-    //     });
+      if (result.success) {
+        CustomToast({
+          type: "success",
+          source: CUSTOM_TEXT.text_data_pelanggan,
+          value: nomor,
+          message: CUSTOM_TEXT.text_sukses_ubah,
+          duration: CUSTOM_TEXT.interval,
+        });
 
-    //     setTimeout(() => {
-    //       location.reload();
-    //     }, CUSTOM_TEXT.interval);
-    //   } else {
-    //     CustomToast({
-    //       type: "error",
-    //       source: CUSTOM_TEXT.text_data_pelanggan,
-    //       value: nomor,
-    //       message: CUSTOM_TEXT.text_gagal_simpan,
-    //       duration: CUSTOM_TEXT.interval,
-    //     });
-    //   }
-    // }
+        setTimeout(() => {
+          location.reload();
+        }, CUSTOM_TEXT.interval);
+      } else {
+        CustomToast({
+          type: "error",
+          source: CUSTOM_TEXT.text_data_pelanggan,
+          value: nomor,
+          message: CUSTOM_TEXT.text_gagal_ubah,
+          duration: CUSTOM_TEXT.interval,
+        });
+      }
+    }
   };
 
   if (isLoading) {

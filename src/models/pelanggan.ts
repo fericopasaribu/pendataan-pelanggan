@@ -69,7 +69,7 @@ export const saveData = async (
 
             const outputPath = path.join(uploadDir, fileName)
 
-            // Kompres menggunakan sharp
+            // kompres menggunakan sharp
             await sharp(buffer)
                 .resize(300) // atur lebar max 300px (tinggi otomatis)
                 .webp({ quality: 75 }) // kompres ke webp, kualitas 0-100
@@ -85,34 +85,88 @@ export const saveData = async (
 };
 
 export const detailData = async (id: number) => {
-  if (!id || isNaN(id)) {
-    return { success: false };
-  }
+    if (!id || isNaN(id)) {
+        return { success: false };
+    }
 
-  const detail = await prisma.tb_pelanggan.findUnique({
-    where: { id },
-  });
+    const detail = await prisma.tb_pelanggan.findUnique({
+        where: { id },
+    });
 
-  return detail ? { success: true, detail } : { success: false };
+    return detail ? { success: true, detail } : { success: false };
 };
 
 
 
-// export const updateData = async (nomor: string,
-//     nama: string,
-//     alamat: string,
-//     telepon: string,
-//     file: File | null,
-//     id: number) => {
+export const updateData = async (nomor: string,
+    nama: string,
+    alamat: string,
+    telepon: string,
+    file: File | null,
+    id: number,
+    oldFoto: string) => {
 
-//     await prisma.tb_pelanggan.update({
-//         where: {
-//             npm: npm_old,
-//         },
-//         data: {
-//             npm: npm,
-//             nama: nama,
-//             prodi: prodi,
-//         },
-//     });
-// }
+    const existing = await prisma.tb_pelanggan.findFirst({
+        select: {
+            id: true,
+        },
+        where: {
+            id: {
+                not: id,
+            },
+            nomor,
+        },
+    });
+
+    if (existing) return { success: false };
+
+    let fileName = ""
+
+    // 2. Simpan file jika ada
+    if (file && file.size > 0) {
+        const imageMimes = ["image/jpeg", "image/png"]
+        const buffer = Buffer.from(await file.arrayBuffer())
+        const uploadDir = path.join(process.cwd(), "public/uploads")
+
+        // jika bukan file gambar
+        if (!imageMimes.includes(file.type)) {
+            // upload dokumen
+            const ext = path.extname(file.name)
+            fileName = `${Date.now()}${ext}`
+
+            await writeFile(path.join(uploadDir, fileName), buffer)
+        }
+        // jika file gambar
+        else {
+            // upload image        
+            if (!fs.existsSync(uploadDir)) {
+                fs.mkdirSync(uploadDir)
+            }
+
+            fileName = `${Date.now()}.webp` // hasil kompres jadi .webp
+
+            const outputPath = path.join(uploadDir, fileName)
+
+            // kompres menggunakan sharp
+            await sharp(buffer)
+                .resize(300) // atur lebar max 300px (tinggi otomatis)
+                .webp({ quality: 75 }) // kompres ke webp, kualitas 0-100
+                .toFile(outputPath)
+        }
+
+        // hapus foto lama
+        if (oldFoto) {
+            const oldPath = path.join(uploadDir, oldFoto);
+            if (fs.existsSync(oldPath)) {
+                fs.unlinkSync(oldPath);
+            }
+        }
+    }
+
+    await prisma.tb_pelanggan.update({
+        where: { id },
+        data: { nomor, nama, alamat, telepon, foto: fileName || oldFoto },
+    });
+
+    return { success: true };
+}
