@@ -37,7 +37,7 @@ Start by opening your terminal or command prompt.
     
 - Open the ``` .env ``` and update the ``` DATABASE_URL ``` configuration to match your PostgreSQL username, password, and database name.
     ```bash
-    DATABASE_URL="postgresql://username:password@localhost:5432/db_barang?schema=public"
+    DATABASE_URL="postgresql://username:password@localhost:5432/db_pelanggan?schema=public"
     ```
     
 - Run the following command to apply the database migrations
