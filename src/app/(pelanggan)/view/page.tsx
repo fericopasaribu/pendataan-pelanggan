@@ -1,6 +1,6 @@
 "use client";
-import CustomViewButton from "@/components/CustomViewButton";
 import CustomReloadButton from "@/components/CustomReloadButton";
+import CustomViewButton from "@/components/CustomViewButton";
 import { DataTable } from "@/components/ui/data-table";
 import { CUSTOM_TEXT } from "@/constants/CustomText";
 import { pelanggan } from "@/features/pelanggan";
@@ -12,7 +12,6 @@ import { Plus, RefreshCcw } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function PelangganViewPage() {
-  const [filter, setFilter] = useState("");
   const [data, setData] = useState<tb_pelanggan[]>([]);
 
   const fetchData = async () => {
@@ -45,16 +44,11 @@ export default function PelangganViewPage() {
           label={CUSTOM_TEXT.text_refresh_data}
           className="btn-secondary"
           icon={RefreshCcw}
-          onClick={() => setFilter("")}
+          onClick={() => localStorage.removeItem(CUSTOM_TEXT.storage_tb_pelanggan)}
         />
       </div>
 
-      <DataTable
-        columns={pelanggan}
-        data={data}
-        filter={filter}
-        setFilter={setFilter}
-      />
+      <DataTable columns={pelanggan} data={data} />
     </div>
   );
 }

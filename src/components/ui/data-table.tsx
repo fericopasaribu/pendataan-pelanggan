@@ -1,43 +1,5 @@
 "use client";
 
-function getPaginationRange(
-  current: number,
-  total: number
-): (number | "ellipsis")[] {
-  const pages: (number | "ellipsis")[] = [];
-
-  if (total <= 3) {
-    return Array.from({ length: total }, (_, i) => i + 1);
-  }
-
-  const firstPages = [1];
-  const lastPages = [total];
-  const middlePages = Math.floor(total / 2);
-
-  const isInFirstBlock = current <= middlePages;
-  const isInLastBlock = current > middlePages;
-
-  if (isInFirstBlock) {
-    pages.push(...firstPages);
-    if (current > 1 && current < total) pages.push(current);
-    pages.push("ellipsis");
-    pages.push(...lastPages);
-  } else if (isInLastBlock) {
-    pages.push(...firstPages);
-    pages.push("ellipsis");
-    if (current > 1 && current < total) pages.push(current);
-    pages.push(...lastPages);
-  } else {
-    pages.push(...firstPages);
-    pages.push("ellipsis");
-    pages.push(current);
-    pages.push("ellipsis");
-    pages.push(...lastPages);
-  }
-
-  return [...new Set(pages)];
-}
-
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -54,61 +16,138 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { CUSTOM_TEXT } from "@/constants/CustomText";
 import { cn } from "@/lib/utils";
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
   SortingState,
   useReactTable,
 } from "@tanstack/react-table";
 import { CircleX } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CustomInput } from "../CustomInput";
-import { CUSTOM_TEXT } from "@/constants/CustomText";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  filter: string;
-  setFilter: (value: string) => void;
+}
+
+function getPaginationRange(
+  current: number,
+  total: number
+): (number | "ellipsis")[] {
+  const pages: (number | "ellipsis")[] = [];
+  if (total <= 3) return Array.from({ length: total }, (_, i) => i + 1);
+  const firstPages = [1];
+  const lastPages = [total];
+  const middlePages = Math.floor(total / 2);
+
+  if (current <= middlePages) {
+    pages.push(...firstPages);
+    if (current > 1 && current < total) pages.push(current);
+    pages.push("ellipsis");
+    pages.push(...lastPages);
+  } else {
+    pages.push(...firstPages);
+    pages.push("ellipsis");
+    if (current > 1 && current < total) pages.push(current);
+    pages.push(...lastPages);
+  }
+
+  return [...new Set(pages)];
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  filter,
-  setFilter,
 }: DataTableProps<TData, TValue>) {
+  const [isClient, setIsClient] = useState(false);
+  const [filter, setFilter] = useState("");
   const [sorting, setSorting] = useState<SortingState>([]);
-
-  const table = useReactTable({
-    data,
-    columns,
-    state: {
-      globalFilter: filter,
-      sorting,
-    },
-    initialState: {
-      pagination: {
-        pageSize: 10,
-      },
-    },
-    onGlobalFilterChange: setFilter,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onSortingChange: setSorting,
-    getSortedRowModel: getSortedRowModel(),
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 10,
   });
 
-  const pageIndex = table.getState().pagination.pageIndex;
+  // localStorage
+  useEffect(() => {
+    setIsClient(true);
+    const saved = JSON.parse(
+      localStorage.getItem(CUSTOM_TEXT.storage_tb_pelanggan) || "{}"
+    );
+    setSorting(saved?.sorting ?? []);
+    setPagination(saved?.pagination ?? { pageIndex: 0, pageSize: 10 });
+    setFilter(saved?.globalFilter ?? "");
+  }, []);
+
+  useEffect(() => {
+    if (!isClient) return;
+    const currentState = { globalFilter: filter, sorting, pagination };
+    localStorage.setItem(
+      CUSTOM_TEXT.storage_tb_pelanggan,
+      JSON.stringify(currentState)
+    );
+  }, [filter, sorting, pagination, isClient]);
+
+  // Filtering
+  const filteredData = data.filter((item) =>
+    Object.values(item as Record<string, unknown>)
+      .join(" ")
+      .toLowerCase()
+      .includes(filter.toLowerCase())
+  );
+
+  // Sorting
+  const sortedData = [...filteredData];
+
+  if (sorting.length > 0) {
+    const sort = sorting[0];
+    const { id, desc } = sort;
+
+    sortedData.sort((a: TData, b: TData) => {
+      const aValue = a[id as keyof TData];
+      const bValue = b[id as keyof TData];
+
+      if (typeof aValue === "string" && typeof bValue === "string") {
+        return desc
+          ? bValue.localeCompare(aValue)
+          : aValue.localeCompare(bValue);
+      }
+
+      if (typeof aValue === "number" && typeof bValue === "number") {
+        return desc ? bValue - aValue : aValue - bValue;
+      }
+
+      return 0;
+    });
+  }
+
+  // Pagination
+  const paginatedData = sortedData.slice(
+    pagination.pageIndex * pagination.pageSize,
+    (pagination.pageIndex + 1) * pagination.pageSize
+  );
+
+  const table = useReactTable({
+    data: paginatedData,
+    columns,
+    state: { sorting, globalFilter: filter, pagination },
+    onSortingChange: setSorting,
+    onGlobalFilterChange: setFilter,
+    onPaginationChange: setPagination,
+    manualSorting: true,
+    manualPagination: true,
+    manualFiltering: true,
+    getCoreRowModel: getCoreRowModel(),
+    pageCount: Math.ceil(filteredData.length / pagination.pageSize),
+  });
+
+  const pageSize = pagination.pageSize;
+  const pageIndex = pagination.pageIndex;
+  const total = filteredData.length;
   const pageCount = table.getPageCount();
-  const pageSize = table.getState().pagination.pageSize;
-  const total = table.getFilteredRowModel().rows.length;
 
   return (
     <div className="space-y-4">
@@ -116,22 +155,28 @@ export function DataTable<TData, TValue>({
         <CustomInput
           placeholder={CUSTOM_TEXT.text_cari_data}
           value={filter}
-          onChange={setFilter}
+          onChange={(val) => {
+            setFilter(val);
+            setPagination((prev) => ({ ...prev, pageIndex: 0 }));
+          }}
           className="input-search-text"
           maxLength={100}
         />
-
         {total > 0 && (
           <Select
-            value={String(table.getState().pagination.pageSize)}
-            onValueChange={(value) => {
-              table.setPageSize(Number(value));
-            }}>
+            value={String(pageSize)}
+            onValueChange={(value) =>
+              setPagination((prev) => ({
+                ...prev,
+                pageSize: Number(value),
+                pageIndex: 0,
+              }))
+            }>
             <SelectTrigger className="input-select w-full sm:w-[184px]">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="input-select-content">
-              {[...new Set([10, 50, data.length])].map((size) => (
+              {[10, 50, data.length].map((size) => (
                 <SelectItem
                   key={size}
                   value={String(size)}
@@ -192,7 +237,8 @@ export function DataTable<TData, TValue>({
                   {columns.map((column, index) => (
                     <TableCell
                       key={index}
-                      className={cn(column.meta?.width, "h-12")}></TableCell>
+                      className={cn(column.meta?.width, "h-12")}
+                    />
                   ))}
                 </TableRow>
               )}
@@ -209,15 +255,14 @@ export function DataTable<TData, TValue>({
       {total > 0 && (
         <div className="pagination-area">
           <div className="pagination-info">
-            {/* <span>
-            Hal. {pageIndex + 1} / {pageCount}
-          </span> */}
             <span>
-              {`Data ${pageIndex * pageSize + 1} - ${Math.min((pageIndex + 1) * pageSize, total)} dari ${total} Data`}
+              {`Data ${pageIndex * pageSize + 1} - ${Math.min(
+                (pageIndex + 1) * pageSize,
+                total
+              )} dari ${total} Data`}
             </span>
           </div>
 
-          {/* Pagination Controls */}
           <div className="pagination-control">
             <Button
               variant="outline"
@@ -227,7 +272,6 @@ export function DataTable<TData, TValue>({
               disabled={pageIndex === 0}>
               &laquo;
             </Button>
-
             <Button
               variant="outline"
               size="icon"
@@ -263,7 +307,6 @@ export function DataTable<TData, TValue>({
               disabled={!table.getCanNextPage()}>
               &rsaquo;
             </Button>
-
             <Button
               variant="outline"
               size="icon"

@@ -45,10 +45,11 @@ export const CUSTOM_TEXT = {
   text_batal: "Batal",
   text_kembali: "Kembali",
 
+  storage_tb_pelanggan: "tbl-pelanggan",
+
   format_isi_angka: `${format_isi} : 0-9`,
   format_isi_nama: `${format_isi} : a-zA-Z .,`,
   format_isi_angka_text: `${format_isi} : 0-9a-zA-Z -.,`,
-
 
   dir_images: "images",
   dir_uploads: "uploads",
